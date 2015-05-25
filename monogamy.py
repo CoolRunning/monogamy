@@ -177,14 +177,16 @@ def get_coeff_idx(v, d):
     return (int(row), int(col))
 
 
-def construct_global_state(n, d, marginals, ftol=10e-4):
+def construct_global_state(n, d, marginals, ftol=10e-4, use_scs=False):
     """ This function takes a set of marginal states and tries to construct a global state in which
         all parties share the respective correlations.
         @parameter  n   number of registers of the global state
         @parameter  d   list which describes the dimension of each register
         @parameter marginals    list of tuples (rho, m) where rho is a numpy-array describing a marginal state
                                 and m is bitmask (list of booleans) that mark which register is active in the marginal
+        @parameter  use_scs if True, the SCS solver will be used instead of CVXOPT. SCS is faster, but less accurate.
         @return (state, rhoG)   where state is 'optimal' if a global state was found and 'infeasible' if not. If
+
                                 a state was found, it is returned by rhoG as a numpy-array.
     """
     # some sanity checks
@@ -214,10 +216,14 @@ def construct_global_state(n, d, marginals, ftol=10e-4):
     prob = cvx.Problem(obj, constr)
 
     # apply solver
-    prob.solve()
+    if use_scs:
+        prob.solve(solver=cvx.SCS)
+    else:
+        prob.solve(solver=cvx.CVXOPT)
 
     # extract solution (if found) and return
     return (prob.status, np.array(rho_global.value) if prob.status == cvx.OPTIMAL else None)
+
 
 def entropy(A):
     """ Computes the Von-Neumann-Entropy of a density-operator A
