@@ -24,7 +24,17 @@ Follow some of the examples to get familiar with the interface.
 
 ### Using the module ###
 
+The following IPython-notebook illustrate how to use the module. You can download each IPython-notebook and experiment with them on your own.
+
+[Construction of global states](global.ipynb)
+
+[Usage of the API](mono.ipynb)
+
 ### Monogamy of Werner States ###
+
+As a research project, the module was supposed to be used to analyse a family of quantum states called [Werner States](http://en.wikipedia.org/wiki/Werner_state). The following IPython-notebook summarizes the task and the obtained results, using the monogamy module.
+
+[Werner State monogamy](werner_monogame.ipynb)
 
 ### License ###
 
