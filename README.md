@@ -34,7 +34,7 @@ The following IPython-notebook illustrate how to use the module. Once you downlo
 
 As a research project, the module was supposed to be used to analyse a family of quantum states called [Werner States](http://en.wikipedia.org/wiki/Werner_state). The following IPython-notebook summarizes the task and the obtained results, using the monogamy module.
 
-[Werner State monogamy](werner_monogame.ipynb)
+[Werner State monogamy](werner_monogamy.ipynb)
 
 ### License ###
 
