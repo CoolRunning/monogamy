@@ -8,6 +8,7 @@
 import numpy as np
 import cvxpy as cvx
 from itertools import product
+from math import log
 
 def is_density_operator(A, ftol=1.0e-8):
     """ returns True if A is a valid density operator
@@ -217,3 +218,10 @@ def construct_global_state(n, d, marginals):
 
     # extract solution (if found) and return
     return (prob.status, np.array(rho_global.value) if prob.status == cvx.OPTIMAL else None)
+
+def entropy(A):
+    """ Computes the Von-Neumann-Entropy of a density-operator A
+        @parameter  A   numpy-array
+        @return Von-Neumann-Entropy
+    """
+    return -1 * sum([e * log(e,2) for e in np.linalg.eigvalsh(A) if e != 0.0])
