@@ -10,7 +10,7 @@ import cvxpy as cvx
 from itertools import product
 from math import log
 
-def is_density_operator(A, ftol=1.0e-8):
+def is_density_operator(A, ftol=1.0e-4):
     """ returns True if A is a valid density operator
         @param  A   numpy-array
         @param  ftol    tolerance value for numerical instability"""
@@ -50,11 +50,11 @@ def werner(w):
     return rho_AB
 
 
-def is_psd(A, ftol=1.0e-8):
+def is_psd(A, ftol=1.0e-4):
     """ checks whether A is a posi-semidefinite matrix by
         computing all eigenvalues. """
     for (i,j),_ in np.ndenumerate(A):
-        if np.linalg.det(minor(A,i,j)) < -1.0 * ftol:
+        if (np.linalg.det(minor(A,i,j))) < -1.0 * ftol:
             return False
     return True
 
@@ -153,9 +153,9 @@ def partial_trace_constraints(rho_e, rho_c, sel, d):
                     c_idx2.append(c_idx[i])
                     i += 1
             if expr == []:
-                expr = [rho_e[get_coeff_idx( (r_idx2, c_idx2), d)]]# == rho_c[get_coeff_idx(v,dr)]]
+                expr = [rho_e[get_coeff_idx( (r_idx2, c_idx2), d)]]
             else:
-                expr = [expr[0] + rho_e[get_coeff_idx( (r_idx2, c_idx2), d)]] # == rho_c[get_coeff_idx(v,dr)]]
+                expr = [expr[0] + rho_e[get_coeff_idx( (r_idx2, c_idx2), d)]]
         constr += [ expr[0] == rho_c[get_coeff_idx(v,dr)] ]
 
     return constr
@@ -177,7 +177,7 @@ def get_coeff_idx(v, d):
     return (int(row), int(col))
 
 
-def construct_global_state(n, d, marginals):
+def construct_global_state(n, d, marginals, ftol=10e-4):
     """ This function takes a set of marginal states and tries to construct a global state in which
         all parties share the respective correlations.
         @parameter  n   number of registers of the global state
@@ -191,16 +191,16 @@ def construct_global_state(n, d, marginals):
     if len(d) != n:
         raise Exception(ValueError, "The number of registers does not equal the length of the given vector of dimensions!")
     for (rho, m) in marginals:
-        if not is_density_operator(rho):
+        if not is_density_operator(rho, ftol):
             raise Exception(ValueError, "One of the given marginals is not a valid density operator!")
 
     for (rho, m) in [marginal for marginal in marginals]:
         # check whether the marginal is consistent with its bitmask
-        if (2**m.count(False)) != rho.shape[0]:
-            raise Exception(ValueError, "The dimensions of the marginal with the traced out parameters does not match")
+        if (np.prod([x for x,b in zip(d,m) if not b])) != rho.shape[0]:
+            raise Exception(ValueError, "The dimensions of the marginal with the traced out parameters do not match")
 
     # create expression for global state
-    rho_global = cvx.Semidef(2**n)
+    rho_global = cvx.Semidef(int(np.prod(d)))
 
     # adding constraints
     constr = [cvx.trace(rho_global) == 1]
