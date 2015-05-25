@@ -10,7 +10,7 @@ Quantum Monogamy is a concept from Quantum Information theory. It describes the 
 
 In order to design robust quantum cryptography protocols it is of high importance to investigate to which extend quantum states can be correlated between multiple parties. 
 
-### Installing the Module ###
+### Installing the module ###
 
 The module is written in [Python3](https://www.python.org). It depends on [NumPy](http://www.numpy.org/) and [CVXPY](http://cvxpy.readthedocs.org/en/latest/index.html). If you want to use it, you first have to set up a working python3 environment with CVXPY on your system. Installation instructions are found [here](http://cvxpy.readthedocs.org/en/latest/install/index.html).
 
