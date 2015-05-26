@@ -26,15 +26,15 @@ The interface of monogamy is documented in the examples below.
 
 The following IPython-notebook illustrate how to use the module. Once you downloaded the IPython-notebooks, you can experiment with them locally and change some values to see what happens.
 
-[Construction of global states](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/global.ipynb)
+* [Construction of global states](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/global.ipynb)
 
-[Usage of the API](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/mono.ipynb)
+* [Usage of the API](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/mono.ipynb)
 
 ### Monogamy of Werner States ###
 
 As a research project, the module was supposed to be used to analyse a family of quantum states called [Werner States](http://en.wikipedia.org/wiki/Werner_state). The following IPython-notebook summarizes the task and the obtained results, using the monogamy module.
 
-[Werner State monogamy](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/werner_monogamy.ipynb)
+* [Werner State monogamy](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/werner_monogamy.ipynb)
 
 ### License ###
 
