@@ -24,7 +24,7 @@ The interface of monogamy is documented in the examples below.
 
 ### Using the module ###
 
-The following IPython-notebook illustrate how to use the module. Once you downloaded the IPython-notebooks, you can experiment with them locally and change some values to see what happens.
+The following IPython-notebooks illustrate how to use the module. Once you downloaded the IPython-notebooks, you can experiment with them locally and change some values to see what happens.
 
 * [Construction of global states](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/global.ipynb)
 
