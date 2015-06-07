@@ -36,6 +36,15 @@ As a research project, the module was supposed to be used to analyse a family of
 
 * [Werner State monogamy](http://nbviewer.ipython.org/github/CoolRunning/monogamy/blob/master/werner_monogamy.ipynb)
 
+### Known limitations ###
+
+* All values that can be used in the density matrices are limited to reals. Complex numbers are no valid inputs and resulting global states will never contain complex numbers as well.
+* For larger systems (for example more than 5 qubits), the computational time for finding global states increases as highly constrained optimization problems on large matrices need to be solved.
+
+### Concluding remarks ###
+
+If you are using this module or find it useful, let me know.
+
 ### License ###
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
