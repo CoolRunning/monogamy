@@ -6,7 +6,7 @@ This folder contains a small python-module that allows you to discover multi-par
 
 ### Introduction ###
 
-Quantum Monogamy is a concept from Quantum Information theory. It describes the relation of different parties that may share (entangled) quantum systems. In particular, it can be shown that if two parties, Alice and Bob, share a maximally entangled state (e.g.: EPR-pair), there can be no third party (Charlie) be entangled with either Alice's or Bob's subsystem. Alice and Bob have stablished a monogamous correlation with each other, that limits the access on information for Charlie. However, if the correlation between Alice and Bob is not perfect but subject to noise, Charlie might share state information with Alice and could gain information about measurement outcomes between Alice and Bob.
+Quantum Monogamy is a concept from Quantum Information theory. It describes the relation of different parties that may share (entangled) quantum systems. In particular, it can be shown that if two parties, Alice and Bob, share a maximally entangled state (e.g.: EPR-pair), there can be no third party (Charlie) be correlated with either Alice's or Bob's subsystem. Alice and Bob have stablished a monogamous correlation with each other, that limits the access on information for Charlie. However, if the correlation between Alice and Bob is not perfect but subject to noise, Charlie might share state information with Alice and could gain information about measurement outcomes between Alice and Bob.
 
 In order to design robust quantum cryptographic protocols it is of high importance to investigate to what extent quantum states can be correlated between multiple parties. 
 
