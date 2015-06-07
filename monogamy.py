@@ -10,6 +10,11 @@ import cvxpy as cvx
 from itertools import product
 from math import log
 
+#def idx2bool(l):
+#    """ Takes a list of indices ("""
+#    return [i in l for i
+
+
 def is_density_operator(A, ftol=1.0e-4):
     """ returns True if A is a valid density operator
         @param  A   numpy-array
@@ -76,9 +81,17 @@ def partial_trace(A, sel, d):
         @parameter  A   numpy-array
         @parameter  d   vector describing the dimension of each subsystem
         @parameter  sel list of booleans, True marks registers that are gonna be traced out
+                        can also be given as a list of indices
 
         @return numpy-array
     """
+    # transform sel if given as a list of indices:
+    try:
+        if type(sel[0]) == int:
+            sel = [i in sel for i in list(range(len(d)))]
+    except IndexError:
+        print('Warning: no subsystem to be traced out.')
+        sel = [False] * len(d)
 
     # compute the new dimension of the reduced state
     dr = [dim for (dim, b) in zip(d,sel) if not b]  # dimensions not traced out
@@ -122,10 +135,20 @@ def partial_trace_constraints(rho_e, rho_c, sel, d):
 
         @parameter  rho_e cvxpy expression for the matrix that we optimize
         @parameter  sel bitmask that marks register to be traced out by True
+                        can also be given as a list of indices
         @parameter  rho_c resulting density matrix as a numpy-array
+        @parameter  d   vector describing the dimension of each subsystem
 
         @return list of cvxpy expression
     """
+    # transform sel if given as a list of indices:
+    try:
+        if type(sel[0]) == int:
+            sel = [i in sel for i in list(range(len(d)))]
+    except IndexError:
+        print('Warning: no subsystem to be traced out.')
+        sel = [False] * len(d)
+
     constr = []
 
     # compute the new dimension of the reduced state
@@ -177,18 +200,32 @@ def get_coeff_idx(v, d):
     return (int(row), int(col))
 
 
-def construct_global_state(n, d, marginals, ftol=10e-4, use_scs=False):
+def construct_global_state(n, d, margs, ftol=10e-4, use_scs=False):
     """ This function takes a set of marginal states and tries to construct a global state in which
         all parties share the respective correlations.
         @parameter  n   number of registers of the global state
         @parameter  d   list which describes the dimension of each register
-        @parameter marginals    list of tuples (rho, m) where rho is a numpy-array describing a marginal state
+        @parameter margs    list of tuples (rho, m) where rho is a numpy-array describing a marginal state
                                 and m is bitmask (list of booleans) that mark which register is active in the marginal
         @parameter  use_scs if True, the SCS solver will be used instead of CVXOPT. SCS is faster, but less accurate.
         @return (state, rhoG)   where state is 'optimal' if a global state was found and 'infeasible' if not. If
 
                                 a state was found, it is returned by rhoG as a numpy-array.
     """
+    # transform sel if given as a list of indices:
+    marginals = []
+    for (rho, m) in margs:
+        try:
+            if type(m[0]) == int:
+                if max(m) >= len(d):
+                    raise Exception(ValueError, "Error in Indexing of subsystem (indexing starts with 0)!")
+                m = [i in m for i in list(range(len(d)))]
+        except IndexError:
+            raise Exception(IndexError, "No system to be traced out!")
+            m = [False] * len(d)
+        marginals.append( (rho, m) )
+
+
     # some sanity checks
     if len(d) != n:
         raise Exception(ValueError, "The number of registers does not equal the length of the given vector of dimensions!")
