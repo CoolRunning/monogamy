@@ -43,7 +43,7 @@ As a research project, the module was supposed to be used to analyse a family of
 
 ### Concluding remarks ###
 
-If you are using this module or find it useful, let me know.
+If you are using this module or like it, let me know.
 
 ### License ###
 
